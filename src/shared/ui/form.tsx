@@ -62,15 +62,17 @@ const FormControl = React.forwardRef<
 >(({ children, ...props }, ref) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
+  const controlProps = {
+    id: formItemId,
+    'aria-describedby': !error ? formDescriptionId : `${formDescriptionId} ${formMessageId}`,
+    'aria-invalid': !!error,
+  };
+
   return (
     <div ref={ref} {...props}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<{ id?: string; 'aria-describedby'?: string; 'aria-invalid'?: boolean }>, {
-              id: formItemId,
-              'aria-describedby': !error ? formDescriptionId : `${formDescriptionId} ${formMessageId}`,
-              'aria-invalid': !!error,
-            })
+          ? React.cloneElement(child, controlProps)
           : child
       )}
     </div>

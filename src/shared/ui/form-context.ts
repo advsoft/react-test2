@@ -9,35 +9,32 @@ export type FormFieldContextValue<
   name: TName
 }
 
-export const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
-)
+export const FormFieldContext = React.createContext<FormFieldContextValue | null>(null);
 
 export type FormItemContextValue = {
   id: string
 }
 
-export const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
-)
+export const FormItemContext = React.createContext<FormItemContextValue | null>(null);
 
 export function useFormField() {
-  const fieldContext = React.useContext(FormFieldContext)
-  const itemContext = React.useContext(FormItemContext)
-  const { getFieldState, formState } = useFormContext()
+  const fieldContext = React.useContext(FormFieldContext);
+  const itemContext = React.useContext(FormItemContext);
+  const { getFieldState, formState } = useFormContext();
 
-  const fieldState = getFieldState(fieldContext.name, formState)
-
-  if (!fieldContext.name) {
-    return { id: "", name: "", formItemId: "", formDescriptionId: "", formMessageId: "", error: undefined }
+  if (!fieldContext?.name) {
+    return { id: "", name: "", formItemId: "", formDescriptionId: "", formMessageId: "", error: undefined };
   }
 
+  const fieldState = getFieldState(fieldContext.name, formState);
+  const itemId = itemContext?.id ?? "";
+
   return {
-    id: itemContext.id,
+    id: itemId,
     name: fieldContext.name,
-    formItemId: `${itemContext.id}-form-item`,
-    formDescriptionId: `${itemContext.id}-form-item-description`,
-    formMessageId: `${itemContext.id}-form-item-message`,
+    formItemId: `${itemId}-form-item`,
+    formDescriptionId: `${itemId}-form-item-description`,
+    formMessageId: `${itemId}-form-item-message`,
     ...fieldState,
   }
 }

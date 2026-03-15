@@ -2,12 +2,12 @@ import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { AUTH_STORAGE_KEY, REMEMBER_ME_KEY } from '@/shared/constants/storage.ts';
 import { getAuthStorage } from '@/shared/lib/auth-storage.ts';
+import { isRecord } from '@/shared/lib/utils.ts';
 import type { AuthState } from '../types/auth.ts';
 
 function isAuthState(value: unknown): value is AuthState {
-  if (!value || typeof value !== 'object') return false;
-  const o = value as Record<string, unknown>;
-  return typeof o.token === 'string' && o.user != null && typeof o.user === 'object';
+  if (!isRecord(value)) return false;
+  return typeof value.token === 'string' && value.user != null && typeof value.user === 'object';
 }
 
 function loadStoredAuth(): AuthState | null {

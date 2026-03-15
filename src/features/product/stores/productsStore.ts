@@ -1,5 +1,6 @@
 import { atomWithStorage } from 'jotai/utils';
 import { PRODUCTS_SORT_KEY } from '@/shared/constants/storage.ts';
+import { isRecord } from '@/shared/lib/utils.ts';
 import type { SortOrder } from '../api/products.ts';
 
 const ALLOWED_SORT_FIELDS = ['title', 'brand', 'sku', 'rating', 'price'] as const;
@@ -20,11 +21,10 @@ function isSortField(value: string): value is SortField {
 }
 
 function isProductsSortState(value: unknown): value is { sortBy?: string; order?: string } {
-  if (!value || typeof value !== 'object') return false;
-  const o = value as Record<string, unknown>;
+  if (!isRecord(value)) return false;
   return (
-    (o.sortBy === undefined || typeof o.sortBy === 'string') &&
-    (o.order === undefined || typeof o.order === 'string')
+    (value.sortBy === undefined || typeof value.sortBy === 'string') &&
+    (value.order === undefined || typeof value.order === 'string')
   );
 }
 

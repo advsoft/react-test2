@@ -47,8 +47,9 @@ function PaginationLink({
   href,
   ...props
 }: PaginationLinkProps) {
+  const ariaCurrent: "page" | undefined = isActive ? "page" : undefined;
   const commonProps = {
-    "aria-current": isActive ? ("page" as const) : undefined,
+    "aria-current": ariaCurrent,
     "data-slot": "pagination-link",
     "data-active": isActive,
     ...props,
