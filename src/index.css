@@ -1,0 +1,69 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-primary: #242edb;
+  --color-primary-foreground: #ffffff;
+  --color-background: #ffffff;
+  --color-foreground: #232323;
+  --color-muted: #f3f3f3;
+  --color-muted-foreground: #b2b3b9;
+  --color-border: #ededed;
+  --color-input: #ededed;
+  --color-ring: #242edb;
+  --color-destructive: #f11010;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #232323;
+  --color-accent: #f3f3f3;
+  --color-accent-foreground: #232323;
+  --radius-md: 12px;
+  --radius-lg: 12px;
+  --color-pagination-active: #797fea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Linear loader (Ant Design style) */
+@keyframes table-loader {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+.product-table-loader-bar {
+  animation: table-loader 1.5s ease-in-out infinite;
+}
+
+/* Figma: selected row strip */
+[data-sonner-toast],
+[data-sonner-toast] > * {
+  background: var(--color-popover) !important;
+  opacity: 1 !important;
+}
+
+.product-table-row-selected {
+  position: relative;
+}
+.product-table-row-selected > td:first-child {
+  position: relative;
+}
+.product-table-row-selected > td:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #3c538e;
+}
